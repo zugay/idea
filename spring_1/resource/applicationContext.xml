@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        Spring底层做了如下操作
+        bean:实例
+          id:变量名
+          class:全限定名
+
+          Class<?> clazz = Class.forName(class);
+          Construtor ct = clazz.getDeclaredConstrutor();
+
+
+          User user = new User();
+          user.setName("老王");
+          user.setPassword("123");
+
+          你看到是xml,心里想的java代码
+          id=user  -   new org.gec.entity.User();
+    -->
+    <bean id="user" class="org.gec.entity.User">
+        <property name="name" value="王二狗子"/>
+        <property name="password" value="123"/>
+    </bean>
+
+    <!-- dog 构造器注入  Dog dog = new Dog("阿黄","中华田园犬")-->
+    <bean id="dog" class="com.gec.entity.Dog">
+        <constructor-arg name="name" value="阿黄"/>
+        <constructor-arg name="type" value="中华田园犬"/>
+    </bean>
+
+    <!-- 构造器注入第2种方式-->
+    <bean id="dog2" class="com.gec.entity.Dog">
+        <constructor-arg index="0" value="八公"/>
+        <constructor-arg index="1" value="日本秋田狗"/>
+    </bean>
+
+    <!-- ref reference 对象的引用 -->
+    <bean id="computor" class="com.gec.entity.Computor">
+        <constructor-arg index="0" ref="host"/>
+        <constructor-arg index="1" ref="display"/>
+    </bean>
+    <bean id="host" class="com.gec.entity.Host"/>
+    <bean id="display" class="org.gec.entity.Display"/>
+
+    <!-- 别名-->
+    <bean id="user2" class="org.gec.entity.User" name="^_^,*_*">
+        <property name="name" value="王二麻子"/>
+        <property name="password" value="666"/>
+    </bean>
+
+    <alias name="user2" alias="@_@"/>
+</beans>
